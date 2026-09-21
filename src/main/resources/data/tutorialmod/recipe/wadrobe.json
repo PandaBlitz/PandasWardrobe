@@ -1,0 +1,25 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "category" : "misc",
+  "key" : {
+    "A" : {
+      "item" : "minecraft:armor_stand"
+    },
+    "P" : {
+      "tag" : "minecraft:planks"
+    },
+    "S" :{
+      "tag" : "minecraft:wooden_slabs"
+    }
+  },
+  "pattern" : [
+    "PSP",
+    "PAP",
+    "PSP"
+  ],
+  "result" :  {
+    "count" : 1,
+    "id" : "tutorialmod:wardrobe"
+  }
+
+}
