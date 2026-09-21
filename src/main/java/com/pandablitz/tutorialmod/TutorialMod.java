@@ -1,5 +1,6 @@
 package com.pandablitz.tutorialmod;
 
+import com.pandablitz.tutorialmod.item.ModItems;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -76,6 +77,10 @@ public class TutorialMod {
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
+        // here we call the register method from ModItems into our main method
+        // then pass through modEventBus
+        ModItems.register(modEventBus);
+
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -87,8 +92,11 @@ public class TutorialMod {
 
     }
 
-    // Add the example block item to the building blocks tab
+    // Add the example block item to the building blocks creative menu tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if(event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(ModItems.WARDROBE);
+        }
 
     }
 
