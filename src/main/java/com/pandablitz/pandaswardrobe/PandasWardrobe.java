@@ -21,9 +21,9 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 
 /*
-    Last updated 9.29.2026.1138
-    Fixed: Wardrobe now displays menu correctly
-    ToDo: Match up item slots with menu gui in WardrobeContainer
+    Last updated 9.28.2026.1317
+    Fixed: Item slots now match up with menu gui
+    ToDo: Create hover button event and make it so that the menu gui armor background updates once armor is slotted
 
  */
 // IMPORTANT LOOK AT JDT GITHUB REPO VERSION 1.21.1

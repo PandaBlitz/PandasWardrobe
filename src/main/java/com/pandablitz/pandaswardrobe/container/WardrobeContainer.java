@@ -35,10 +35,10 @@ public class WardrobeContainer extends AbstractContainerMenu {
         handler = new ComponentItemHandler(wardrobe, ModItems.ITEMSTACK_HANDLER.get(), SLOTS);
 
         // wardrobe slots x/y variables can be moved to match gui slots
-        addSlotBox(handler, 0, 8, 18, 7, 18, 4, 18); // 7 wide x 4 tall = 28 slots
+        addSlotBox(handler, 0, 14, 17, 7, 22, 4, 18); // 7 wide x 4 tall = 28 slots
 
-        // adding player inventory + hotbar
-        addPlayerSlots(playerInventory, 8, 140);
+        // adding player inventory + hotbar x/y variables can be moved to match slots
+        addPlayerSlots(playerInventory, 9, 131);
     }
 
     /**

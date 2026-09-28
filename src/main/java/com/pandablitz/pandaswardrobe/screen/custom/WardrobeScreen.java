@@ -27,7 +27,7 @@ public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
 
         // hardcoded label recalculation
         this.inventoryLabelX = 8;
-        this.inventoryLabelY = this.imageHeight - 125;
+        this.inventoryLabelY = this.imageHeight - 130;
         this.titleLabelX = 8;
         this.titleLabelY = 6;
     }
