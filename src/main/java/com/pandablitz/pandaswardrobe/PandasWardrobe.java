@@ -17,6 +17,15 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
+
+
+
+/*
+    Last updated 9.29.2026.1138
+    Fixed: Wardrobe now displays menu correctly
+    ToDo: Match up item slots with menu gui in WardrobeContainer
+
+ */
 // IMPORTANT LOOK AT JDT GITHUB REPO VERSION 1.21.1
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(PandasWardrobe.MOD_ID)
@@ -24,7 +33,7 @@ public class PandasWardrobe {
     // Define mod id in a common place for everything to reference
     // mod_id is THE identifier for your mod so it must be unique, can only contain lowercase and no space
     // can be changed to pandablitzWardrobe later on just make sure to change in gradle.properties as well
-    public static final String MOD_ID = "tutorialmod";
+    public static final String MOD_ID = "pandaswardrobe";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 

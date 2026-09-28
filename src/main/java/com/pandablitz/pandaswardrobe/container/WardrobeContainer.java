@@ -12,13 +12,6 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
-/*
-    This is a container class for our wardrobe, a container allows us to store specific items and keep them there.
-    container classes are used to only set up menu slots
-    The goal of this class is to 1. add our player inventory and hotbar 2. add the armor slots
-
- */
-
  /**
  *  This is the WardrobeContainer class, which adds and adjusts both the wardrobe and player inventory slots.
   *  We use a container since it allows us to store and keep items within it.
