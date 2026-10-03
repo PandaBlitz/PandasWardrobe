@@ -8,9 +8,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-/*
-    This is our wardrobe item class our goal is to get an item that 1. stores only armor, 2. update the players armor
-    with the slotted armor in the click of a button, 3. make it unique for each player
+
+/**
+ * Wardrobe class that links the {@link WardrobeContainer} class with our Wardrobe
  */
 
 public class Wardrobe extends Item  {

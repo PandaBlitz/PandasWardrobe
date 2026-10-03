@@ -5,6 +5,9 @@ import com.pandablitz.pandaswardrobe.PandasWardrobe;
 import com.pandablitz.pandaswardrobe.container.WardrobeContainer;
 import com.pandablitz.pandaswardrobe.item.custom.Wardrobe;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.client.gui.components.WidgetTooltipHolder;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -13,8 +16,15 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
+
+    //gui and button texture loading
     private final ResourceLocation GUI_TEXTURE =
                 ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "textures/gui/wardrobe/wardrobe_gui.png");
+    private static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(
+            ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "buttons/button"),
+            ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "buttons/button_hovering")
+    ); // button sprites are 18x18
+
     private WardrobeContainer container;
     private ItemStack wardrobe;
 
@@ -25,7 +35,7 @@ public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
         this.imageWidth = 176;
         this.imageHeight = 250;
 
-        // hardcoded label recalculation
+        // inventory label placement
         this.inventoryLabelX = 8;
         this.inventoryLabelY = this.imageHeight - 130;
         this.titleLabelX = 8;
@@ -46,6 +56,20 @@ public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
     @Override
     public void init() {
         super.init();
+
+        int relX = (this.width - this.imageWidth) / 2;
+        int relY = (this.height - this.imageHeight) / 2;
+        int dX = 23;
+
+        // paints the buttons onto the gui
+        for (int i = 0; i < 7; i++) {
+            final int columnID = i;
+            this.addRenderableWidget(new ImageButton(relX + 13 + ( dX * i) - i, relY + 96, 18, 18, BUTTON_SPRITES,
+                    button -> { // logic for button click
+                    if(this.minecraft != null && this.minecraft.gameMode != null) {
+                        this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, columnID); //
+                    }}));
+        }
     }
 
     @Override

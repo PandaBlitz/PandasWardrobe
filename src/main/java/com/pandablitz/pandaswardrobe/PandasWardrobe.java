@@ -17,25 +17,19 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
-
-
-
 /*
-    Last updated 9.28.2026.1317
-    Fixed: Item slots now match up with menu gui
-    ToDo: Create hover button event and make it so that the menu gui armor background updates once armor is slotted
-
+    Last updated 10.3.2026.(time)
+    Fixed: Hover button has been created and slots now swap, store, and unequip current armor and ONLY accepts MC armor
+    ToDo: Fix Hover button to revert back after click. Update gui OR armor slot for armor background to turn transparent.
  */
+
 // IMPORTANT LOOK AT JDT GITHUB REPO VERSION 1.21.1
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(PandasWardrobe.MOD_ID)
 public class PandasWardrobe {
-    // Define mod id in a common place for everything to reference
-    // mod_id is THE identifier for your mod so it must be unique, can only contain lowercase and no space
-    // can be changed to pandablitzWardrobe later on just make sure to change in gradle.properties as well
+
+    // mod_id identifier, must be unique and lowercased, should be defined in a common place to be referenced easily
     public static final String MOD_ID = "pandaswardrobe";
-    // Directly reference a slf4j logger
-    public static final Logger LOGGER = LogUtils.getLogger();
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
@@ -44,7 +38,7 @@ public class PandasWardrobe {
         modEventBus.addListener(this::commonSetup);
 
         // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
+        // Note that this is necessary if and only if we want *this* class (PandasWardrobe) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 

@@ -1,7 +1,9 @@
 package com.pandablitz.pandaswardrobe.container;
 
 import com.pandablitz.pandaswardrobe.item.ModItems;
+import com.pandablitz.pandaswardrobe.slots.ArmorSlot;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -13,8 +15,8 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
  /**
- *  This is the WardrobeContainer class, which adds and adjusts both the wardrobe and player inventory slots.
-  *  We use a container since it allows us to store and keep items within it.
+  *  This is the WardrobeContainer class, which adds and adjusts both the wardrobe and player inventory slots.
+  *  We use an {@link AbstractContainerMenu} since it allows us to store and keep items within it.
  */
 
 public class WardrobeContainer extends AbstractContainerMenu {
@@ -28,6 +30,7 @@ public class WardrobeContainer extends AbstractContainerMenu {
         this(windowId, inv, player, ItemStack.OPTIONAL_STREAM_CODEC.decode(extraData));
     }
 
+    // must update our menu when an item is slotted in and only allow armor slots
     public WardrobeContainer(int windowid, Inventory playerInventory, Player player, ItemStack wardrobe) {
         super(ModItems.Wardrobe_Container.get(), windowid);
         playerEntity = player;
@@ -35,7 +38,11 @@ public class WardrobeContainer extends AbstractContainerMenu {
         handler = new ComponentItemHandler(wardrobe, ModItems.ITEMSTACK_HANDLER.get(), SLOTS);
 
         // wardrobe slots x/y variables can be moved to match gui slots
-        addSlotBox(handler, 0, 14, 17, 7, 22, 4, 18); // 7 wide x 4 tall = 28 slots
+        int index = 0;
+        index = addArmorSlotRow(handler, index, 14, 17, 7, 22, EquipmentSlot.HEAD);   // row 1 — helmets
+        index = addArmorSlotRow(handler, index, 14, 35, 7, 22, EquipmentSlot.CHEST);  // row 2 — chestplates
+        index = addArmorSlotRow(handler, index, 14, 53, 7, 22, EquipmentSlot.LEGS);   // row 3 — leggings
+        index = addArmorSlotRow(handler, index, 14, 71, 7, 22, EquipmentSlot.FEET);   // row 4 - boots
 
         // adding player inventory + hotbar x/y variables can be moved to match slots
         addPlayerSlots(playerInventory, 9, 131);
@@ -56,7 +63,6 @@ public class WardrobeContainer extends AbstractContainerMenu {
         inY += 58;
         addSlotRange(new InvWrapper(playerInventory), 0, inX, inY, 9, 18);
     }
-
 
      /**
       * Method for adding slot range. Loops through a passed amount and adds slots per iteration
@@ -99,6 +105,27 @@ public class WardrobeContainer extends AbstractContainerMenu {
         return index;
     }
 
+     /**
+      * Method for creating ONLY armor item slots using our {@link ArmorSlot} class - might need to fix
+      * to be compatible with ATM10 armor
+      * @param handler The Item Handler
+      * @param index The slot position to be linked in {@link SlotItemHandler}
+      * @param x Starting x-axis position in our inventory for our slots
+      * @param y Starting y-axis position in our inventory for our slots
+      * @param amount amount of slots to add
+      * @param dx amount to space out each slot
+      * @param type type of armor(equipment) slot
+      * @return
+      */
+    protected int addArmorSlotRow(IItemHandler handler, int index, int x, int y, int amount, int dx, EquipmentSlot type) {
+        for (int i = 0 ; i < amount ; i++) {
+            addSlot(new ArmorSlot(handler, index, x, y, type));
+            x += dx;
+            index++;
+        }
+        return  index;
+    }
+
 
     // taken from JustDireThings
     @Override
@@ -137,5 +164,22 @@ public class WardrobeContainer extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player playerInv) {
         return playerInv.getMainHandItem().equals(wardrobeItemStack);
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        EquipmentSlot[] rows = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+
+        for (int row = 0 ; row < 4; row++) {
+            int wardrobeIndex = id + (row * 7); // loops 4 times for each column and multiplies by 7 to get each item within that column
+            EquipmentSlot equipSlot = rows[row];
+
+            ItemStack wardrobeStack = handler.getStackInSlot(wardrobeIndex);
+            ItemStack equippedStack = player.getItemBySlot(equipSlot);
+
+            handler.setStackInSlot(wardrobeIndex, equippedStack);
+            player.setItemSlot(equipSlot, wardrobeStack);
+        }
+        return true;
     }
 }
