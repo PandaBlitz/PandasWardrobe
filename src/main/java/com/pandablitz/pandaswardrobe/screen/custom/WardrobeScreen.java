@@ -7,7 +7,6 @@ import com.pandablitz.pandaswardrobe.item.custom.Wardrobe;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.WidgetSprites;
-import net.minecraft.client.gui.components.WidgetTooltipHolder;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -17,13 +16,20 @@ import net.minecraft.world.item.ItemStack;
 
 public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
 
-    //gui and button texture loading
+    //gui and button and slot texture loading
     private final ResourceLocation GUI_TEXTURE =
                 ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "textures/gui/wardrobe/wardrobe_gui.png");
     private static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(
             ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "buttons/button"),
             ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "buttons/button_hovering")
     ); // button sprites are 18x18
+    private static final ResourceLocation[] SLOT_BACKGROUND = {
+                ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "armor/helmet_slot"),
+                ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "armor/chestplate_slot"),
+                ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "armor/pants_slot"),
+                ResourceLocation.fromNamespaceAndPath(PandasWardrobe.MOD_ID, "armor/boots_slot")
+    }; // slot backgrounds sprites are 16x16
+
 
     private WardrobeContainer container;
     private ItemStack wardrobe;
@@ -83,6 +89,14 @@ public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
         this.wardrobe = container.playerEntity.getMainHandItem();
         if (wardrobe.isEmpty() || !(wardrobe.getItem() instanceof Wardrobe))
             return;
+
+        for(int i = 0; i < WardrobeContainer.SLOTS; i++) {
+            Slot slot = this.menu.slots.get(i);
+            if (!slot.hasItem()) {
+                int row = i / 7;
+                guiGraphics.blitSprite(SLOT_BACKGROUND[row], relX + slot.x , relY + slot.y, 16, 16);
+            }
+        }
     }
 
     @Override
