@@ -1,5 +1,6 @@
 {
   "_comment" : "this is translating item.tutorialmod.wardrobe into the readable name Wardrobe",
   "_comment" : "basically this is where we name our items",
-  "item.pandaswardrobe.wardrobe": "Wardrobe"
+  "item.pandaswardrobe.wardrobe": "Wardrobe",
+  "item.pandaswardrobe.mod_name": "Panda's Wardrobe"
 }
