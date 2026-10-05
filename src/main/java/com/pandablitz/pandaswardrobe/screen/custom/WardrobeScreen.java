@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.pandablitz.pandaswardrobe.PandasWardrobe;
 import com.pandablitz.pandaswardrobe.container.WardrobeContainer;
 import com.pandablitz.pandaswardrobe.item.custom.Wardrobe;
+import com.pandablitz.pandaswardrobe.screen.button.HoverOnlyImageButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.WidgetSprites;
@@ -70,7 +71,7 @@ public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
         // paints the buttons onto the gui
         for (int i = 0; i < 7; i++) {
             final int columnID = i;
-            this.addRenderableWidget(new ImageButton(relX + 13 + ( dX * i) - i, relY + 96, 18, 18, BUTTON_SPRITES,
+            this.addRenderableWidget(new HoverOnlyImageButton(relX + 13 + ( dX * i) - i, relY + 96, 18, 18, BUTTON_SPRITES,
                     button -> { // logic for button click
                     if(this.minecraft != null && this.minecraft.gameMode != null) {
                         this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, columnID); //

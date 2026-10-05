@@ -9,8 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.ComponentItemHandler;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
@@ -21,21 +21,20 @@ import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 public class WardrobeContainer extends AbstractContainerMenu {
     public static final int SLOTS = 28;
-    public ComponentItemHandler handler;
-    public ItemStack wardrobeItemStack;
+    public ItemStackHandler handler;
     public Player playerEntity;
 
 
+
     public WardrobeContainer(int windowId, Inventory inv, Player player, RegistryFriendlyByteBuf extraData) {
-        this(windowId, inv, player, ItemStack.OPTIONAL_STREAM_CODEC.decode(extraData));
+        this(windowId, inv, player);
     }
 
     // must update our menu when an item is slotted in and only allow armor slots
-    public WardrobeContainer(int windowid, Inventory playerInventory, Player player, ItemStack wardrobe) {
-        super(ModItems.Wardrobe_Container.get(), windowid);
-        playerEntity = player;
-        this.wardrobeItemStack = wardrobe;
-        handler = new ComponentItemHandler(wardrobe, ModItems.ITEMSTACK_HANDLER.get(), SLOTS);
+    public WardrobeContainer(int windowid, Inventory playerInventory, Player player) {
+        super(ModItems.WARDROBE_CONTAINER.get(), windowid);
+        this.playerEntity = player;
+        this.handler = player.getData(ModItems.WARDROBE_STORAGE.get());
 
         // wardrobe slots x/y variables can be moved to match gui slots
         int index = 0;
@@ -163,7 +162,7 @@ public class WardrobeContainer extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerInv) {
-        return playerInv.getMainHandItem().equals(wardrobeItemStack);
+        return true;
     }
 
     @Override

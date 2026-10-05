@@ -25,9 +25,9 @@ public class Wardrobe extends Item  {
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
         // linking our wardrobe to its container and adding playerdata
             serverPlayer.openMenu(new SimpleMenuProvider(
-                    (containerId, playerInventory, p) -> new WardrobeContainer(containerId, playerInventory,player, stack),
-                    stack.getHoverName()), buf -> ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, stack)
-                    );
+                    (containerId, playerInventory, p) -> new WardrobeContainer(containerId, playerInventory,player),
+                    stack.getHoverName()
+            ));
         }
 
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());

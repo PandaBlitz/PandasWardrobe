@@ -12,6 +12,6 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(ModItems.Wardrobe_Container.get(), WardrobeScreen::new);
+        event.register(ModItems.WARDROBE_CONTAINER.get(), WardrobeScreen::new);
     }
 }
