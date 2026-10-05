@@ -3,17 +3,14 @@ package com.pandablitz.pandaswardrobe.screen.custom;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.pandablitz.pandaswardrobe.PandasWardrobe;
 import com.pandablitz.pandaswardrobe.container.WardrobeContainer;
-import com.pandablitz.pandaswardrobe.item.custom.Wardrobe;
 import com.pandablitz.pandaswardrobe.screen.button.HoverOnlyImageButton;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 
 public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
 
@@ -33,12 +30,10 @@ public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
 
 
     private WardrobeContainer container;
-    private ItemStack wardrobe;
 
     public WardrobeScreen(WardrobeContainer container, Inventory playerInventory, Component title) {
         super(container ,playerInventory, title);
         this.container = container;
-        this.wardrobe = container.playerEntity.getMainHandItem();
         this.imageWidth = 176;
         this.imageHeight = 250;
 
@@ -72,7 +67,7 @@ public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
         for (int i = 0; i < 7; i++) {
             final int columnID = i;
             this.addRenderableWidget(new HoverOnlyImageButton(relX + 13 + ( dX * i) - i, relY + 96, 18, 18, BUTTON_SPRITES,
-                    button -> { // logic for button click
+                    button -> {
                     if(this.minecraft != null && this.minecraft.gameMode != null) {
                         this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, columnID); //
                     }}));
@@ -87,10 +82,6 @@ public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
         guiGraphics.blit(GUI_TEXTURE, relX, relY, 0, 0, this.imageWidth, this.imageHeight,
                 this.imageWidth, this.imageHeight);
 
-        this.wardrobe = container.playerEntity.getMainHandItem();
-        if (wardrobe.isEmpty() || !(wardrobe.getItem() instanceof Wardrobe))
-            return;
-
         for(int i = 0; i < WardrobeContainer.SLOTS; i++) {
             Slot slot = this.menu.slots.get(i);
             if (!slot.hasItem()) {
@@ -102,7 +93,7 @@ public class WardrobeScreen extends AbstractContainerScreen<WardrobeContainer> {
 
     @Override
     public boolean isPauseScreen() {
-        return  false;
+        return false;
     }
 
     @Override

@@ -30,7 +30,6 @@ public class WardrobeContainer extends AbstractContainerMenu {
         this(windowId, inv, player);
     }
 
-    // must update our menu when an item is slotted in and only allow armor slots
     public WardrobeContainer(int windowid, Inventory playerInventory, Player player) {
         super(ModItems.WARDROBE_CONTAINER.get(), windowid);
         this.playerEntity = player;
@@ -43,7 +42,7 @@ public class WardrobeContainer extends AbstractContainerMenu {
         index = addArmorSlotRow(handler, index, 14, 53, 7, 22, EquipmentSlot.LEGS);   // row 3 — leggings
         index = addArmorSlotRow(handler, index, 14, 71, 7, 22, EquipmentSlot.FEET);   // row 4 - boots
 
-        // adding player inventory + hotbar x/y variables can be moved to match slots
+        // adding player inventory and hotbar x/y variables can be moved to match slots
         addPlayerSlots(playerInventory, 9, 131);
     }
 
